@@ -1,0 +1,35 @@
+version: '3.9'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:80"
+    volumes:
+      - ./:/var/www/html/
+    links:
+      - db
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: mysql://root:root@db:3306/cart
+
+  db:
+    image: 'mysql:5.7'
+    environment:
+      MYSQL_USER: diego
+      MYSQL_PASSWORD: pass
+      MYSQL_ROOT_USER: root
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: cart
+    ports:
+      # To allow the host machine to access the ports below, modify the lines below.
+      # For example, to allow the host to connect to port 3306 on the container, you would change
+      # "3306" to "3306:3306". Where the first port is exposed to the host and the second is the container port.
+      # See https://docs.docker.com/compose/compose-file/compose-file-v3/#ports for more information.
+      - '3306:3306'
+
+
+
