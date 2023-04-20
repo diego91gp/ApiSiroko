@@ -2,7 +2,7 @@
 
 namespace App\Shop\Domain\User;
 
-use App\Shop\Domain\Exceptions\EmailCreationException;
+use App\Shop\Domain\User\Exceptions\EmailCreationException;
 
 class EmailVO
 {
@@ -13,11 +13,12 @@ class EmailVO
      */
     public function __construct($email)
     {
-        $this->email = $email;
+
 
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             throw new EmailCreationException();
         }
+        $this->email = $email;
 
     }
 

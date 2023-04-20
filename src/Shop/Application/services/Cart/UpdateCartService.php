@@ -5,7 +5,7 @@ namespace App\Shop\Application\services\Cart;
 use App\Shop\Domain\Cart\Cart;
 use App\Shop\Domain\Cart\CartItemRepository;
 use App\Shop\Domain\Cart\CartRepository;
-use App\Shop\Domain\Exceptions\CartExceptions;
+use App\Shop\Domain\Cart\Exceptions\CartExceptions;
 use App\Shop\Domain\Product\Product;
 use App\Shop\Domain\Product\ProductRepository;
 

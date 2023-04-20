@@ -2,7 +2,7 @@
 
 namespace App\Shop\Domain\Product;
 
-use App\Shop\Domain\Exceptions\PriceExceptions;
+use App\Shop\Domain\Product\Exceptions\PriceExceptions;
 
 
 class Price

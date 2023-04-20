@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Shop\Domain\Exceptions;
+namespace App\Shop\Domain\Product\Exceptions;
 
 
 use Exception;

@@ -2,7 +2,7 @@
 
 namespace App\Shop\Domain\User;
 
-use App\Shop\Domain\Exceptions\PasswordCreationException;
+use App\Shop\Domain\User\Exceptions\PasswordCreationException;
 
 class PassVO
 {

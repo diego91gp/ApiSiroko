@@ -2,10 +2,11 @@
 
 namespace App\Tests\Cart;
 
-use App\Shop\Application\services\Cart\AddToCartService;
+use App\Shop\Application\Command\AddProductToCartCommand;
+use App\Shop\Application\Command\AddProductToCartCommandHandler;
 use App\Shop\Domain\Cart\CartRepository;
-use App\Shop\Domain\Exceptions\CartExceptions;
-use App\Shop\Domain\Exceptions\PriceExceptions;
+use App\Shop\Domain\Cart\Exceptions\CartExceptions;
+use App\Shop\Domain\Product\Exceptions\PriceExceptions;
 use App\Shop\Domain\Product\Price;
 use App\Shop\Domain\Product\Product;
 use App\Shop\Domain\Product\ProductRepository;
@@ -22,7 +23,7 @@ class AddToCartTest extends TestCase
 
     private MockObject|ProductRepository $pr;
 
-    private AddToCartService $addToCartService;
+    private AddProductToCartCommandHandler $addToCartService;
 
     public function __construct(string $name)
     {
@@ -35,7 +36,7 @@ class AddToCartTest extends TestCase
         $this->ur = $this->getMockBuilder(UserRepository::class)->disableOriginalConstructor()->getMock();
         $this->cr = $this->getMockBuilder(CartRepository::class)->disableOriginalConstructor()->getMock();
         $this->pr = $this->getMockBuilder(ProductRepository::class)->disableOriginalConstructor()->getMock();
-        $this->addToCartService = new  AddToCartService($this->ur, $this->pr, $this->cr);
+        $this->addToCartService = new  AddProductToCartCommandHandler($this->ur, $this->pr, $this->cr);
 
     }
 
@@ -54,15 +55,17 @@ class AddToCartTest extends TestCase
 
         $this->ur->expects($this->once())
             ->method('findById')
-            ->with($this->equalTo(1))
+            ->with($this->equalTo(2))
             ->willReturn($user);
 
 
         $this->pr->expects($this->once())
             ->method('findById')
-            ->with($this->equalTo(2))
+            ->with($this->equalTo(1))
             ->willReturn($product);
-        $this->addToCartService->addToCart(1, 2, 3);
+
+        $command = new AddProductToCartCommand(1, 3, 2);
+        ($this->addToCartService)($command);
         $this->assertTrue(true);
 
     }

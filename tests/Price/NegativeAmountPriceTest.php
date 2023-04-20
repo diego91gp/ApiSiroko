@@ -2,7 +2,7 @@
 
 namespace App\Tests\Price;
 
-use App\Shop\Domain\Exceptions\PriceExceptions;
+use App\Shop\Domain\Product\Exceptions\PriceExceptions;
 use App\Shop\Domain\Product\Price;
 use PHPUnit\Framework\TestCase;
 

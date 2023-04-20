@@ -3,7 +3,7 @@
 namespace App\Shop\Infrastructure\Controller\CartControllers;
 
 use App\Shop\Application\services\Cart\ShowCartService;
-use App\Shop\Domain\Exceptions\CartExceptions;
+use App\Shop\Domain\Cart\Exceptions\CartExceptions;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;

@@ -4,8 +4,8 @@ namespace App\Shop\Infrastructure\Persistence\Doctrine\Repository;
 
 use App\Shop\Domain\Cart\Cart;
 use App\Shop\Domain\Cart\CartRepository;
-use App\Shop\Domain\User\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 
@@ -34,9 +34,21 @@ class CartRepositoryImpl extends ServiceEntityRepository implements CartReposito
     }
 
 
+    /**
+     * @throws NonUniqueResultException
+     */
     public function findCartByUserId(int $userId): ?Cart
     {
-        return $this->getEntityManager()->find(User::class, $userId);
+
+
+        $queryBuilder = $this->createQueryBuilder('c');
+        $queryBuilder
+            ->select('a')
+            ->from(Cart::class, 'a')
+            ->where('a.user = :userId')
+            ->setParameter('userId', $userId);
+
+        return $queryBuilder->getQuery()->getOneOrNullResult();
 
     }
 }

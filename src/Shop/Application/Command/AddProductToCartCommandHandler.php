@@ -1,17 +1,16 @@
 <?php
 
-namespace App\Shop\Application\services\Cart;
+namespace App\Shop\Application\Command;
 
 use App\Shop\Domain\Cart\Cart;
 use App\Shop\Domain\Cart\CartRepository;
-use App\Shop\Domain\Exceptions\CartExceptions;
+use App\Shop\Domain\Cart\Exceptions\CartExceptions;
 use App\Shop\Domain\Product\Product;
 use App\Shop\Domain\Product\ProductRepository;
 use App\Shop\Domain\User\User;
 use App\Shop\Domain\User\UserRepository;
-use Exception;
 
-class AddToCartService
+class AddProductToCartCommandHandler
 {
     public function __construct(private readonly UserRepository $userRepository, private readonly ProductRepository $productRepository, private readonly CartRepository $cartRepository)
     {
@@ -20,24 +19,21 @@ class AddToCartService
 
     /**
      * @throws CartExceptions
-     * @throws Exception
      */
-    public function addToCart(int $userID, int $productID, int $units): void
+    public function __invoke(AddProductToCartCommand $command): void
     {
+        $user = $this->userRepository->findById($command->getUserID());
 
-        $user = $this->userRepository->findById($userID);
-
-        $product = $this->productRepository->findById($productID);
+        $product = $this->productRepository->findById($command->getProductId());
 
         $this->guardUser($user);
         $this->guardProduct($product);
         $cart = $this->checkCart($user);
 
-        $cart->addItemsToCart($product, $units);
+        $cart->addItemsToCart($product, $command->getUnits());
 
 
         $this->cartRepository->saveCart($cart);
-
     }
 
 
@@ -69,4 +65,5 @@ class AddToCartService
         if (!$user) throw CartExceptions::userNotFound();
     }
 
+//DTO
 }

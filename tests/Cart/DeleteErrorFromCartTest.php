@@ -5,7 +5,7 @@ namespace App\Tests\Cart;
 use App\Shop\Application\services\Cart\DeleteCartService;
 use App\Shop\Domain\Cart\CartItemRepository;
 use App\Shop\Domain\Cart\CartRepository;
-use App\Shop\Domain\Exceptions\CartExceptions;
+use App\Shop\Domain\Cart\Exceptions\CartExceptions;
 use App\Shop\Domain\Product\ProductRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use PHPUnit\Framework\MockObject\MockObject;

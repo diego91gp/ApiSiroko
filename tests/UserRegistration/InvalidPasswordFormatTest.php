@@ -4,7 +4,7 @@ namespace App\Tests\UserRegistration;
 
 use App\Cart\Domain\Entity\VO\Price;
 use App\Cart\Domain\Exceptions\PriceExceptions;
-use App\Shop\Domain\Exceptions\PasswordCreationException;
+use App\Shop\Domain\User\Exceptions\PasswordCreationException;
 use App\Shop\Domain\User\PassVO;
 use PHPUnit\Framework\TestCase;
 
