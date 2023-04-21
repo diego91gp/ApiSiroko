@@ -2,12 +2,13 @@
 
 namespace App\Tests\Cart;
 
+use App\Shop\Application\Command\DeleteProductFromCartCommand;
+use App\Shop\Application\Command\DeleteProductFromCartCommandHandler;
 use App\Shop\Application\services\Cart\DeleteCartService;
 use App\Shop\Domain\Cart\CartItemRepository;
 use App\Shop\Domain\Cart\CartRepository;
 use App\Shop\Domain\Cart\Exceptions\CartExceptions;
 use App\Shop\Domain\Product\ProductRepository;
-use Doctrine\ORM\NonUniqueResultException;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -15,7 +16,7 @@ class DeleteErrorFromCartTest extends TestCase
 {
     private MockObject|CartRepository $cr;
 
-    private DeleteCartService $deleteCartService;
+    private DeleteProductFromCartCommandHandler $deleteCartService;
 
     public function __construct(string $name)
     {
@@ -28,13 +29,11 @@ class DeleteErrorFromCartTest extends TestCase
         $this->cr = $this->getMockBuilder(CartRepository::class)->disableOriginalConstructor()->getMock();
         $pr = $this->getMockBuilder(ProductRepository::class)->disableOriginalConstructor()->getMock();
         $cir = $this->getMockBuilder(CartItemRepository::class)->disableOriginalConstructor()->getMock();
-        $this->deleteCartService = new DeleteCartService($this->cr, $pr, $cir);
+        $this->deleteCartService = new DeleteProductFromCartCommandHandler($this->cr, $pr, $cir);
 
     }
 
-    /**
-     * @throws NonUniqueResultException
-     */
+
     public function testDeleteCartNotFound()
     {
         $this->cr->expects($this->once())
@@ -43,8 +42,9 @@ class DeleteErrorFromCartTest extends TestCase
 
         $this->expectException(CartExceptions::class);
         $this->expectExceptionMessage('Carrito no encontrado');
+        $command = new DeleteProductFromCartCommand(1, 2);
 
-        $result = $this->deleteCartService->deleteFromCart(1, 2);
+        $result = ($this->deleteCartService)($command);
         $this->assertNull($result);
 
     }

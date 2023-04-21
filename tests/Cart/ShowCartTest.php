@@ -2,10 +2,10 @@
 
 namespace App\Tests\Cart;
 
-use App\Shop\Application\services\Cart\ShowCartService;
+use App\Shop\Application\Query\ShowCartQuery;
+use App\Shop\Application\Query\ShowCartQueryHandler;
 use App\Shop\Domain\Cart\Cart;
 use App\Shop\Domain\Cart\CartRepository;
-use App\Shop\Domain\Cart\DTO\CartResponseDTO;
 use App\Shop\Domain\Cart\Exceptions\CartExceptions;
 use App\Shop\Domain\Product\Exceptions\PriceExceptions;
 use App\Shop\Domain\Product\Price;
@@ -20,7 +20,7 @@ class ShowCartTest extends TestCase
 {
     private MockObject|CartRepository $cr;
 
-    private ShowCartService $showCartService;
+    private ShowCartQueryHandler $showCartService;
 
     public function __construct(string $name)
     {
@@ -31,7 +31,7 @@ class ShowCartTest extends TestCase
     {
         parent::setUp();
         $this->cr = $this->getMockBuilder(CartRepository::class)->disableOriginalConstructor()->getMock();
-        $this->showCartService = new ShowCartService($this->cr);
+        $this->showCartService = new ShowCartQueryHandler($this->cr);
 
     }
 
@@ -49,10 +49,12 @@ class ShowCartTest extends TestCase
             ->method('findCartByUserId')
             ->with($this->equalTo(1))
             ->willReturn($cart);
+        $query = new ShowCartQuery(1);
 
-        $response = ($this->showCartService)(1);
+        $response = ($this->showCartService)($query);
 
-        $this->assertInstanceOf(CartResponseDTO::class, $response);
+
+        $this->assertTrue(is_array($response));
 
     }
 

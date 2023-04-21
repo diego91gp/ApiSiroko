@@ -5,7 +5,7 @@ namespace App\Tests\UserRegistration;
 use App\Shop\Domain\User\EmailVO;
 use App\Shop\Domain\User\PassVO;
 use App\Shop\Domain\User\User;
-use App\Shop\Infrastructure\Persistence\Doctrine\Repository\UserRepositoryImpl;
+use App\Shop\Infrastructure\Persistence\Doctrine\Repository\DoctrineUserRepositoryImpl;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -13,13 +13,13 @@ use PHPUnit\Framework\TestCase;
 class UserRegistrationTest extends TestCase
 {
 
-    private MockObject|UserRepositoryImpl $ur;
+    private MockObject|DoctrineUserRepositoryImpl $ur;
 
 
     public function setUp(): void
     {
         parent::setUp();
-        $this->ur = $this->getMockBuilder(UserRepositoryImpl::class)->disableOriginalConstructor()->getMock();
+        $this->ur = $this->getMockBuilder(DoctrineUserRepositoryImpl::class)->disableOriginalConstructor()->getMock();
 
     }
 

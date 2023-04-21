@@ -10,7 +10,7 @@ use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 
-class CartItemRepositoryImpl extends ServiceEntityRepository implements CartItemRepository
+class DoctrineCartItemRepositoryImpl extends ServiceEntityRepository implements CartItemRepository
 {
     public function __construct(ManagerRegistry $registry)
     {

@@ -2,10 +2,11 @@
 
 namespace App\Tests\Cart;
 
+use App\Shop\Application\Command\CheckoutCommand;
+use App\Shop\Application\Command\CheckoutCommandHandler;
 use App\Shop\Application\services\Cart\CheckoutService;
 use App\Shop\Domain\Cart\Cart;
 use App\Shop\Domain\Cart\CartRepository;
-use App\Shop\Domain\Cart\DTO\CartResponseDTO;
 use App\Shop\Domain\Cart\Exceptions\CartExceptions;
 use App\Shop\Domain\Product\Exceptions\PriceExceptions;
 use App\Shop\Domain\Product\Price;
@@ -20,7 +21,7 @@ use PHPUnit\Framework\TestCase;
 class CheckoutCartTest extends TestCase
 {
     private MockObject|CartRepository $cr;
-    private CheckoutService $checkoutService;
+    private CheckoutCommandHandler $checkoutService;
 
     public function __construct(string $name)
     {
@@ -32,7 +33,7 @@ class CheckoutCartTest extends TestCase
         parent::setUp();
         $this->cr = $this->getMockBuilder(CartRepository::class)->disableOriginalConstructor()->getMock();
         $pr = $this->getMockBuilder(ProductRepository::class)->disableOriginalConstructor()->getMock();
-        $this->checkoutService = new CheckoutService($this->cr, $pr);
+        $this->checkoutService = new CheckoutCommandHandler($this->cr, $pr);
 
     }
 
@@ -52,10 +53,10 @@ class CheckoutCartTest extends TestCase
             ->method('findCartByUserId')
             ->with($this->equalTo(1))
             ->willReturn($cart);
+        $command = new CheckoutCommand(1, 3, 2);
+        $response = ($this->checkoutService)($command);
+        $this->assertTrue(is_array($response));
 
-        $response = ($this->checkoutService)(1);
-
-        $this->assertInstanceOf(CartResponseDTO::class, $response);
 
     }
 

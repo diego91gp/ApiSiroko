@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Shop\Application\services\Cart;
+namespace App\Shop\Application\Command;
 
 use App\Shop\Domain\Cart\Cart;
 use App\Shop\Domain\Cart\CartRepository;
@@ -8,7 +8,7 @@ use App\Shop\Domain\Cart\DTO\CartResponseDTO;
 use App\Shop\Domain\Cart\Exceptions\CartExceptions;
 use App\Shop\Domain\Product\ProductRepository;
 
-class CheckoutService
+class CheckoutCommandHandler
 {
     public function __construct(private readonly CartRepository $cartRepository, private readonly ProductRepository $productRepository)
     {
@@ -18,11 +18,11 @@ class CheckoutService
     /**
      * @throws CartExceptions
      */
-    public function __invoke(int $userid): CartResponseDTO
+    public function __invoke(CheckoutCommand $command): array
     {
 
         $response = new CartResponseDTO();
-        $cart = $this->cartRepository->findCartByUserId($userid);
+        $cart = $this->cartRepository->findCartByUserId($command->getUserId());
 
         $this->guardCart($cart);
 
@@ -31,7 +31,7 @@ class CheckoutService
 
         $this->cartRepository->deleteCart($cart);
 
-        return $response;
+        return $response->getProducts();
     }
 
     /**

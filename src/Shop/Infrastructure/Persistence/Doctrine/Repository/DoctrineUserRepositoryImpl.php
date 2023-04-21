@@ -9,7 +9,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 
-class UserRepositoryImpl extends ServiceEntityRepository implements UserRepository
+class DoctrineUserRepositoryImpl extends ServiceEntityRepository implements UserRepository
 {
     public function __construct(ManagerRegistry $registry)
     {

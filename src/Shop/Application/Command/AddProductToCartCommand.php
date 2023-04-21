@@ -2,17 +2,37 @@
 
 namespace App\Shop\Application\Command;
 
-use App\Shop\Domain\Cart\Cart;
-
 class AddProductToCartCommand
 {
-    public function __construct(private readonly Cart $cart)
+    public function __construct(private readonly int $productId,
+                                private readonly int $units,
+                                private readonly int $userID)
     {
+
     }
 
-    public function getCart(): Cart
+    /**
+     * @return int
+     */
+    public function getProductId(): int
     {
-        return $this->cart;
+        return $this->productId;
+    }
+
+    /**
+     * @return int
+     */
+    public function getUnits(): int
+    {
+        return $this->units;
+    }
+
+    /**
+     * @return int
+     */
+    public function getUserID(): int
+    {
+        return $this->userID;
     }
 
 }

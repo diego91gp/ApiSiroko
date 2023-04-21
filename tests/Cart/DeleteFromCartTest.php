@@ -2,7 +2,8 @@
 
 namespace App\Tests\Cart;
 
-use App\Shop\Application\services\Cart\DeleteCartService;
+use App\Shop\Application\Command\DeleteProductFromCartCommand;
+use App\Shop\Application\Command\DeleteProductFromCartCommandHandler;
 use App\Shop\Domain\Cart\Cart;
 use App\Shop\Domain\Cart\CartItem;
 use App\Shop\Domain\Cart\CartItemRepository;
@@ -26,7 +27,7 @@ class DeleteFromCartTest extends TestCase
     private MockObject|ProductRepository $pr;
     private MockObject|CartItemRepository $cir;
 
-    private DeleteCartService $deleteCartService;
+    private DeleteProductFromCartCommandHandler $deleteCartService;
 
     public function __construct(string $name)
     {
@@ -39,7 +40,7 @@ class DeleteFromCartTest extends TestCase
         $this->cr = $this->getMockBuilder(CartRepository::class)->disableOriginalConstructor()->getMock();
         $this->pr = $this->getMockBuilder(ProductRepository::class)->disableOriginalConstructor()->getMock();
         $this->cir = $this->getMockBuilder(CartItemRepository::class)->disableOriginalConstructor()->getMock();
-        $this->deleteCartService = new DeleteCartService($this->cr, $this->pr, $this->cir);
+        $this->deleteCartService = new DeleteProductFromCartCommandHandler($this->cr, $this->pr, $this->cir);
 
     }
 
@@ -77,8 +78,10 @@ class DeleteFromCartTest extends TestCase
         $this->cir->expects($this->once())
             ->method('deleteCartItem')
             ->with($this->equalTo($cartItem));
+        $command = new DeleteProductFromCartCommand(1, 1);
 
-        $this->deleteCartService->deleteFromCart(1, 1);
+
+        ($this->deleteCartService)($command);
         assertSame(0, $cart->getProducts()->count());
 
     }
