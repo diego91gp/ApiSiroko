@@ -2,8 +2,8 @@
 
 namespace App\Shop\Infrastructure\Controller\CartControllers;
 
+use App\Shared\Infrastructure\Services\HandlerEventDispatcher;
 use App\Shop\Application\Query\ShowCartQuery;
-use App\Shop\Application\Query\ShowCartQueryHandler;
 use App\Shop\Domain\Cart\Exceptions\CartExceptions;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ShowCartController extends AbstractController
 {
-    public function __construct(private readonly ShowCartQueryHandler $showCartHandler)
+    public function __construct(private readonly HandlerEventDispatcher $handler)
     {
     }
 
@@ -20,9 +20,7 @@ class ShowCartController extends AbstractController
     public function showCart(int $userid): JsonResponse
     {
         try {
-            $response = ($this->showCartHandler)(
-                new ShowCartQuery($userid)
-            );
+            $response = $this->handler->dispatchQuery(new ShowCartQuery($userid));
 
 
             return new JsonResponse($response, Response::HTTP_OK);

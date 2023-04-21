@@ -2,6 +2,7 @@
 
 namespace App\Shop\Application\Command;
 
+use App\Shared\Application\Symfony\CommandHandlerInterface;
 use App\Shop\Domain\Cart\Cart;
 use App\Shop\Domain\Cart\CartItemRepository;
 use App\Shop\Domain\Cart\CartRepository;
@@ -10,7 +11,7 @@ use App\Shop\Domain\Product\Product;
 use App\Shop\Domain\Product\ProductRepository;
 
 
-class UpdateCartCommandHandler
+class UpdateCartCommandHandler implements CommandHandlerInterface
 {
     public function __construct(
         private readonly CartRepository     $cartRepository,

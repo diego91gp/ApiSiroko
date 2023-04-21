@@ -2,10 +2,11 @@
 
 namespace App\Shop\Application\Query;
 
+use App\Shared\Application\Symfony\QueryHandlerInterface;
 use App\Shop\Domain\Cart\CartRepository;
 use App\Shop\Domain\Cart\Exceptions\CartExceptions;
 
-class ShowCartQueryHandler
+class ShowCartQueryHandler implements QueryHandlerInterface
 {
     public function __construct(private readonly CartRepository $cartRepository)
     {

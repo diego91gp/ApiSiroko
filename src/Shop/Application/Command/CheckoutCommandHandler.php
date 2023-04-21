@@ -2,13 +2,14 @@
 
 namespace App\Shop\Application\Command;
 
+use App\Shared\Application\Symfony\CommandHandlerInterface;
 use App\Shop\Domain\Cart\Cart;
 use App\Shop\Domain\Cart\CartRepository;
 use App\Shop\Domain\Cart\DTO\CartResponseDTO;
 use App\Shop\Domain\Cart\Exceptions\CartExceptions;
 use App\Shop\Domain\Product\ProductRepository;
 
-class CheckoutCommandHandler
+class CheckoutCommandHandler implements CommandHandlerInterface
 {
     public function __construct(private readonly CartRepository $cartRepository, private readonly ProductRepository $productRepository)
     {

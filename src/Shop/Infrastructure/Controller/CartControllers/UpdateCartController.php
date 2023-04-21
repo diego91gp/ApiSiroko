@@ -2,8 +2,8 @@
 
 namespace App\Shop\Infrastructure\Controller\CartControllers;
 
+use App\Shared\Infrastructure\Services\HandlerEventDispatcher;
 use App\Shop\Application\Command\UpdateCartCommand;
-use App\Shop\Application\Command\UpdateCartCommandHandler;
 use App\Shop\Domain\Cart\Exceptions\CartExceptions;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class UpdateCartController extends AbstractController
 {
-    public function __construct(private readonly UpdateCartCommandHandler $updateCommand)
+    public function __construct(private readonly HandlerEventDispatcher $command)
     {
     }
 
@@ -25,9 +25,7 @@ class UpdateCartController extends AbstractController
             $productid = $request->request->get('productid');
             $uds = $request->request->get('units');
 
-            $result = ($this->updateCommand)(
-                new UpdateCartCommand($productid, $userid, $uds)
-            );
+            $result = $this->command->dispatchCommand(new UpdateCartCommand($productid, $userid, $uds));
 
             return new JsonResponse($result, Response::HTTP_OK);
         } catch (CartExceptions $e) {

@@ -2,6 +2,7 @@
 
 namespace App\Shop\Application\Command;
 
+use App\Shared\Application\Symfony\CommandHandlerInterface;
 use App\Shop\Domain\Cart\Cart;
 use App\Shop\Domain\Cart\CartItemRepository;
 use App\Shop\Domain\Cart\CartRepository;
@@ -9,7 +10,7 @@ use App\Shop\Domain\Cart\Exceptions\CartExceptions;
 use App\Shop\Domain\Product\Product;
 use App\Shop\Domain\Product\ProductRepository;
 
-class DeleteProductFromCartCommandHandler
+class DeleteProductFromCartCommandHandler implements CommandHandlerInterface
 {
     public function __construct(
         private readonly CartRepository     $cartRepository,
@@ -30,8 +31,8 @@ class DeleteProductFromCartCommandHandler
 
         $this->guardCart($cart);
         $this->guardProduct($product);
-
-        $cartItem = $this->cartItemRepository->findByCartIdAndProductId($cart->getId(), $command->getUserId());
+        
+        $cartItem = $this->cartItemRepository->findByCartIdAndProductId($cart->getId(), $command->getProductId());
 
         $this->checkIfCartContainsProduct($cartItem);
 
@@ -49,6 +50,7 @@ class DeleteProductFromCartCommandHandler
      */
     private function checkIfCartContainsProduct($cartItem): void
     {
+
         if (!$cartItem) throw CartExceptions::deleteItemError();
     }
 
