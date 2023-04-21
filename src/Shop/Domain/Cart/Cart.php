@@ -80,7 +80,7 @@ class Cart
             $response->addToCart($cartItem->getProduct()->getName(), $cartItem->getProduct()->amount()
                 , $cartItem->getUds());
         }
-
+//
         return $response->getProducts();
     }
 
