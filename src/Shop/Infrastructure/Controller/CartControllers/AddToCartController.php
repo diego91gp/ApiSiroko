@@ -27,10 +27,10 @@ class AddToCartController extends AbstractController
             $productID = $request->request->get('productid');
             $units = $request->request->get('units');
 
-
             ($this->handler)(
                 new FindUserQuery($productID, $units, $userid)
             );
+
 
             return new JsonResponse("Agregado con exito", Response::HTTP_OK);
         } catch (CartExceptions $e) {
