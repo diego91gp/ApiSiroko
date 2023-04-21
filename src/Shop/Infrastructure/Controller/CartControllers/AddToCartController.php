@@ -3,8 +3,8 @@
 namespace App\Shop\Infrastructure\Controller\CartControllers;
 
 
-use App\Shop\Application\Command\AddProductToCartCommand;
-use App\Shop\Application\Command\AddProductToCartCommandHandler;
+use App\Shop\Application\Query\FindUserQuery;
+use App\Shop\Application\Query\FindUserQueryHandler;
 use App\Shop\Domain\Cart\Exceptions\CartExceptions;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class AddToCartController extends AbstractController
 {
 
-    public function __construct(private readonly AddProductToCartCommandHandler $handler)
+    public function __construct(private readonly FindUserQueryHandler $handler)
     {
     }
 
@@ -29,7 +29,7 @@ class AddToCartController extends AbstractController
 
 
             ($this->handler)(
-                new AddProductToCartCommand($productID, $units, $userid)
+                new FindUserQuery($productID, $units, $userid)
             );
 
             return new JsonResponse("Agregado con exito", Response::HTTP_OK);

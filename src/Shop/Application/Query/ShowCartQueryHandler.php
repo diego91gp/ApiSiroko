@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Shop\Application\services\Cart;
+namespace App\Shop\Application\Query;
 
 use App\Shop\Domain\Cart\CartRepository;
-use App\Shop\Domain\Cart\DTO\CartResponseDTO;
 use App\Shop\Domain\Cart\Exceptions\CartExceptions;
 
-class ShowCartService
+class ShowCartQueryHandler
 {
     public function __construct(private readonly CartRepository $cartRepository)
     {
@@ -16,9 +15,10 @@ class ShowCartService
     /**
      * @throws CartExceptions
      */
-    public function __invoke(int $userID): CartResponseDTO
+    public function __invoke(ShowCartQuery $query): array
     {
-        $cart = $this->cartRepository->findCartByUserId($userID);
+        $cart = $this->cartRepository->findCartByUserId($query->getUserId());
+
         $this->guardProducts($cart);
 
         return $cart->resume();

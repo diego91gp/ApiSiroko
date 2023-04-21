@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Shop\Application\services\Cart;
+namespace App\Shop\Application\Command;
 
 use App\Shop\Domain\Cart\Cart;
 use App\Shop\Domain\Cart\CartItemRepository;
@@ -10,7 +10,7 @@ use App\Shop\Domain\Product\Product;
 use App\Shop\Domain\Product\ProductRepository;
 
 
-class UpdateCartService
+class UpdateCartCommandHandler
 {
     public function __construct(
         private readonly CartRepository     $cartRepository,
@@ -24,21 +24,22 @@ class UpdateCartService
     /**
      * @throws CartExceptions
      */
-    public function updateCart(int $userID, int $productID, int $uds): string
+    public function __invoke(UpdateCartCommand $command): string
     {
-        $this->guardUnits($uds);
-        $cart = $this->cartRepository->findCartByUserId($userID);
+
+        $this->guardUnits($command->getUnits());
+        $cart = $this->cartRepository->findCartByUserId($command->getUserId());
 
         $this->guardCart($cart);
-        $product = $this->productRepository->findById($productID);
+        $product = $this->productRepository->findById($command->getProductId());
         $this->guardProduct($product);
-        $cartItem = $cart->findItemInCart($productID);
+        $cartItem = $cart->findItemInCart($command->getProductId());
 
 
-        if ($uds == 0) {
+        if ($command->getUnits() == 0) {
             $this->cartItemRepository->deleteCartItem($cartItem);
         } else {
-            $cartItem->setUds($uds);
+            $cartItem->setUds($command->getUnits());
             $this->cartItemRepository->saveItem($cartItem);
         }
         return 'Carrito actualizado correctamente';

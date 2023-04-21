@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Shop\Application\services\Cart;
+namespace App\Shop\Application\Command;
 
 use App\Shop\Domain\Cart\Cart;
 use App\Shop\Domain\Cart\CartItemRepository;
@@ -9,9 +9,12 @@ use App\Shop\Domain\Cart\Exceptions\CartExceptions;
 use App\Shop\Domain\Product\Product;
 use App\Shop\Domain\Product\ProductRepository;
 
-class DeleteCartService
+class DeleteProductFromCartCommandHandler
 {
-    public function __construct(private readonly CartRepository $cartRepository, private readonly ProductRepository $productRepository, private readonly CartItemRepository $cartItemRepository)
+    public function __construct(
+        private readonly CartRepository     $cartRepository,
+        private readonly ProductRepository  $productRepository,
+        private readonly CartItemRepository $cartItemRepository)
     {
 
     }
@@ -19,16 +22,16 @@ class DeleteCartService
     /**
      * @throws CartExceptions
      */
-    public function deleteFromCart(int $userID, int $productID): void
+    public function __invoke(DeleteProductFromCartCommand $command): void
     {
-        $cart = $this->cartRepository->findCartByUserId($userID);
-        $product = $this->productRepository->findById($productID);
+        $cart = $this->cartRepository->findCartByUserId($command->getUserId());
+        $product = $this->productRepository->findById($command->getProductId());
 
 
         $this->guardCart($cart);
         $this->guardProduct($product);
 
-        $cartItem = $this->cartItemRepository->findByCartIdAndProductId($cart->getId(), $userID);
+        $cartItem = $this->cartItemRepository->findByCartIdAndProductId($cart->getId(), $command->getUserId());
 
         $this->checkIfCartContainsProduct($cartItem);
 

@@ -72,7 +72,7 @@ class Cart
         return $this;
     }
 
-    public function resume(): CartResponseDTO
+    public function resume(): array
     {
         $response = new CartResponseDTO();
 
@@ -80,19 +80,10 @@ class Cart
             $response->addToCart($cartItem->getProduct()->getName(), $cartItem->getProduct()->amount()
                 , $cartItem->getUds());
         }
-        return $response;
+
+        return $response->getProducts();
     }
 
-    public function checkout(): CartResponseDTO
-    {
-        $response = new CartResponseDTO();
-
-        foreach ($this->getProducts() as $cartItem) {
-            $response->addToCart($cartItem->getProduct()->getName(), $cartItem->getProduct()->amount()
-                , $cartItem->getUds());
-        }
-        return $response;
-    }
 
     /**
      * @return Collection

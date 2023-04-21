@@ -27,6 +27,8 @@ class CheckoutService
         $this->guardCart($cart);
 
         $this->checkout($cart, $response);
+
+
         $this->cartRepository->deleteCart($cart);
 
         return $response;
