@@ -5,9 +5,10 @@ namespace App\Shop\Application\Command;
 use App\Shared\Application\Symfony\CommandHandlerInterface;
 use App\Shop\Domain\Cart\Cart;
 use App\Shop\Domain\Cart\CartRepository;
-use App\Shop\Domain\Cart\Exceptions\CartExceptions;
+use App\Shop\Domain\Product\Exceptions\ProductNotFoundInDBException;
 use App\Shop\Domain\Product\Product;
 use App\Shop\Domain\Product\ProductRepository;
+use App\Shop\Domain\User\Exceptions\UserNotFoundException;
 use App\Shop\Domain\User\User;
 use App\Shop\Domain\User\UserRepository;
 
@@ -22,8 +23,10 @@ class AddProductToCartCommandHandler implements CommandHandlerInterface
 
     }
 
+
     /**
-     * @throws CartExceptions
+     * @throws ProductNotFoundInDBException
+     * @throws UserNotFoundException
      */
     public function __invoke(AddProductToCartCommand $command): void
     {
@@ -41,11 +44,11 @@ class AddProductToCartCommandHandler implements CommandHandlerInterface
     }
 
     /**
-     * @throws CartExceptions
+     * @throws ProductNotFoundInDBException
      */
     private function guardProduct(?Product $product): void
     {
-        if (!$product) throw CartExceptions::cartNotFound();
+        if (!$product) throw new ProductNotFoundInDBException();
 
     }
 
@@ -54,17 +57,15 @@ class AddProductToCartCommandHandler implements CommandHandlerInterface
 
         $cart = $this->cartRepository->findCartByUserId($user->getId());
 
-        if (!$cart) {
-            return new Cart($user);
-        }
-        return $cart;
+        return (!$cart) ? new Cart($user) : $cart;
+
     }
 
     /**
-     * @throws CartExceptions
+     * @throws UserNotFoundException
      */
     private function guardUser(?User $user): void
     {
-        if (!$user) throw CartExceptions::userNotFound();
+        if (!$user) throw new UserNotFoundException();
     }
 }

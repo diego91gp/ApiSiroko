@@ -1,6 +1,9 @@
 <?php
 
-namespace App\Shop\Domain\Cart\DTO;
+namespace App\Shop\Application\DTO;
+
+use App\Shop\Domain\Cart\Cart;
+
 class CartResponseDTO
 {
     private array $products = [];
@@ -21,6 +24,16 @@ class CartResponseDTO
                 'unitPrice' => $unitPrice,
                 'uds' => $uds
             ];
+    }
+
+    public static function assemble(Cart $cart): self
+    {
+        $cartDTO = new self();
+        foreach ($cart->getProducts() as $cartItem) {
+            $cartDTO->addToCart($cartItem->getProduct()->getName(), $cartItem->getProduct()->amount()
+                , $cartItem->getUds());
+        }
+        return $cartDTO;
     }
 
     public function getProducts(): array

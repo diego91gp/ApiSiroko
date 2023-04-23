@@ -5,7 +5,7 @@ namespace App\Shop\Infrastructure\Controller\CartControllers;
 
 use App\Shared\Infrastructure\Services\HandlerEventDispatcher;
 use App\Shop\Application\Command\AddProductToCartCommand;
-use App\Shop\Domain\Cart\Exceptions\CartExceptions;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,7 +29,7 @@ class AddToCartController extends AbstractController
             $this->handler->dispatchCommand(new AddProductToCartCommand($productID, $units, $userid));
 
             return new JsonResponse("Agregado con exito", Response::HTTP_OK);
-        } catch (CartExceptions $e) {
+        } catch (Exception $e) {
             return new JsonResponse($e->getMessage());
         }
 

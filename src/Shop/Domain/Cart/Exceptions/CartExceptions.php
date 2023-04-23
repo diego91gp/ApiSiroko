@@ -18,21 +18,12 @@ class CartExceptions extends Exception
 
     public static function productNotFound(): CartExceptions
     {
-        return new self('Producto no encontrado');
+        return new self('No se ha encontrado ese producto en su carrito');
     }
 
-    public static function negativeUnits(): CartExceptions
-    {
-        return new self('No se permiten unidades negativas');
-    }
-
-    public static function userNotFound(): CartExceptions
-    {
-        return new self('Usuario no encontrado');
-    }
 
     public static function deleteItemError(): CartExceptions
     {
-        return new self('Error al borrar el producto');
+        return new self('Error al borrar el producto del carrito');
     }
 }

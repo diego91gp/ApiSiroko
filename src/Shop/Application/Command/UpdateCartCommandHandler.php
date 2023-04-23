@@ -7,6 +7,7 @@ use App\Shop\Domain\Cart\Cart;
 use App\Shop\Domain\Cart\CartItemRepository;
 use App\Shop\Domain\Cart\CartRepository;
 use App\Shop\Domain\Cart\Exceptions\CartExceptions;
+use App\Shop\Domain\Product\Exceptions\PriceExceptions;
 use App\Shop\Domain\Product\Product;
 use App\Shop\Domain\Product\ProductRepository;
 
@@ -24,6 +25,7 @@ class UpdateCartCommandHandler implements CommandHandlerInterface
 
     /**
      * @throws CartExceptions
+     * @throws PriceExceptions
      */
     public function __invoke(UpdateCartCommand $command): string
     {
@@ -57,11 +59,11 @@ class UpdateCartCommandHandler implements CommandHandlerInterface
     }
 
     /**
-     * @throws CartExceptions
+     * @throws PriceExceptions
      */
     private function guardUnits(int $uds): void
     {
-        if ($uds < 0) throw CartExceptions::negativeUnits();
+        if ($uds < 0) throw PriceExceptions::negativeAmount();
 
     }
 

@@ -3,9 +3,9 @@
 namespace App\Shop\Application\Command;
 
 use App\Shared\Application\Symfony\CommandHandlerInterface;
+use App\Shop\Application\DTO\CartResponseDTO;
 use App\Shop\Domain\Cart\Cart;
 use App\Shop\Domain\Cart\CartRepository;
-use App\Shop\Domain\Cart\DTO\CartResponseDTO;
 use App\Shop\Domain\Cart\Exceptions\CartExceptions;
 use App\Shop\Domain\Product\ProductRepository;
 
@@ -19,20 +19,20 @@ class CheckoutCommandHandler implements CommandHandlerInterface
     /**
      * @throws CartExceptions
      */
-    public function __invoke(CheckoutCommand $command): array
+    public function __invoke(CheckoutCommand $command): CartResponseDTO
     {
 
-        $response = new CartResponseDTO();
+        $cartResponseDTO = new CartResponseDTO();
         $cart = $this->cartRepository->findCartByUserId($command->getUserId());
 
         $this->guardCart($cart);
 
-        $this->checkout($cart, $response);
+        $this->checkout($cart, $cartResponseDTO);
 
 
         $this->cartRepository->deleteCart($cart);
 
-        return $response->getProducts();
+        return $cartResponseDTO;
     }
 
     /**
@@ -45,10 +45,10 @@ class CheckoutCommandHandler implements CommandHandlerInterface
     }
 
 
-    public function checkout(Cart $cart, CartResponseDTO $response): void
+    public function checkout(Cart $cart, CartResponseDTO $cartResponseDTO): void
     {
         foreach ($cart->getProducts() as $cartItem) {
-            $response->addToCart($cartItem->getProduct()->getName(), $cartItem->getProduct()->amount()
+            $cartResponseDTO->addToCart($cartItem->getProduct()->getName(), $cartItem->getProduct()->amount()
                 , $cartItem->getUds());
             $product = $this->productRepository->find($cartItem->getProduct()->getId());
             $product->setStock($product->getStock() - $cartItem->getUds());
@@ -56,7 +56,7 @@ class CheckoutCommandHandler implements CommandHandlerInterface
 
         }
 
-        $response->setTotal($cart->getTotal());
+        $cartResponseDTO->setTotal($cart->getTotal());
     }
 
 

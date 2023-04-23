@@ -29,7 +29,7 @@ class DoctrineProductRepositoryImpl extends ServiceEntityRepository implements P
 
     }
 
-    public function findById(int $productId): Product
+    public function findById(int $productId): ?Product
     {
         return $this->find($productId);
     }

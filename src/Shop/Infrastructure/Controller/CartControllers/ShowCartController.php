@@ -20,10 +20,9 @@ class ShowCartController extends AbstractController
     public function showCart(int $userid): JsonResponse
     {
         try {
-            $response = $this->handler->dispatchQuery(new ShowCartQuery($userid));
+            $cartDTO = $this->handler->dispatchQuery(new ShowCartQuery($userid));
 
-
-            return new JsonResponse($response, Response::HTTP_OK);
+            return new JsonResponse($cartDTO->getProducts(), Response::HTTP_OK);
         } catch (CartExceptions $e) {
             return new JsonResponse($e->getMessage());
         }

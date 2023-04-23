@@ -2,7 +2,7 @@
 
 namespace App\Shop\Domain\Cart;
 
-use App\Shop\Domain\Cart\DTO\CartResponseDTO;
+use App\Shop\Application\DTO\CartResponseDTO;
 use App\Shop\Domain\Cart\Exceptions\CartExceptions;
 use App\Shop\Domain\Product\Product;
 use App\Shop\Domain\User\User;

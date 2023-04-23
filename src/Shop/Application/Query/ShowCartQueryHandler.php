@@ -3,6 +3,7 @@
 namespace App\Shop\Application\Query;
 
 use App\Shared\Application\Symfony\QueryHandlerInterface;
+use App\Shop\Application\DTO\CartResponseDTO;
 use App\Shop\Domain\Cart\CartRepository;
 use App\Shop\Domain\Cart\Exceptions\CartExceptions;
 
@@ -16,13 +17,15 @@ class ShowCartQueryHandler implements QueryHandlerInterface
     /**
      * @throws CartExceptions
      */
-    public function __invoke(ShowCartQuery $query): array
+    public function __invoke(ShowCartQuery $query): CartResponseDTO
+
     {
         $cart = $this->cartRepository->findCartByUserId($query->getUserId());
 
         $this->guardProducts($cart);
+        
 
-        return $cart->resume();
+        return CartResponseDTO::assemble($cart);
     }
 
     /**
