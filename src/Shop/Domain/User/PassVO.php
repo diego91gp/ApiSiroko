@@ -6,17 +6,14 @@ use App\Shop\Domain\User\Exceptions\PasswordCreationException;
 
 class PassVO
 {
-    private string $password;
-    private string $validatePass = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/';
 
+    private string $validatePass = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/';
 
     /**
      * @throws PasswordCreationException
      */
-    public function __construct($password)
+    public function __construct(private readonly string $password)
     {
-        $this->password = $password;
-
         if (!preg_match($this->validatePass, $password)) {
             throw new PasswordCreationException();
         }
@@ -28,9 +25,13 @@ class PassVO
         return $this->password;
     }
 
-    public function setPassword(string $password): void
+    /**
+     * @throws PasswordCreationException
+     */
+    public static function updatePass(string $pass): self
     {
-        $this->password = $password;
+        return new self($pass);
     }
+
 
 }

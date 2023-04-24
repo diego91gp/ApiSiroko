@@ -6,20 +6,14 @@ use App\Shop\Domain\User\Exceptions\EmailCreationException;
 
 class EmailVO
 {
-    private string $email;
-
     /**
      * @throws EmailCreationException
      */
-    public function __construct($email)
+    public function __construct(private readonly string $email)
     {
-
-
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             throw new EmailCreationException();
         }
-        $this->email = $email;
-
     }
 
     public function value(): string
@@ -27,9 +21,11 @@ class EmailVO
         return $this->email;
     }
 
-    public function setEmail(string $email): void
+    /**
+     * @throws EmailCreationException
+     */
+    public static function updateEmail(string $email): self
     {
-        $this->email = $email;
+        return new self($email);
     }
-
 }

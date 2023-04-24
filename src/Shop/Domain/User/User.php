@@ -3,24 +3,13 @@
 namespace App\Shop\Domain\User;
 
 
-use App\Shop\Domain\Cart\Cart;
+use App\Shop\Domain\User\Exceptions\EmailCreationException;
+use App\Shop\Domain\User\Exceptions\PasswordCreationException;
 
 class User
 {
-
-    private int $id;
-
-    private string $name;
-
-    private EmailVO $email;
-
-    private PassVO $password;
-
-    public function __construct(string $name, EmailVO $email, PassVO $password)
+    public function __construct(private string $name, private EmailVO $email, private PassVO $password)
     {
-        $this->name = $name;
-        $this->email = $email;
-        $this->password = $password;
     }
 
     public function setId(int $id): void
@@ -50,11 +39,12 @@ class User
         return $this->email;
     }
 
-    public function setEmail(EmailVO $email): self
+    /**
+     * @throws EmailCreationException
+     */
+    public function setEmail(string $email): void
     {
-        $this->email = $email;
-
-        return $this;
+        $this->email = EmailVO::updateEmail($email);
     }
 
     public function getPassword(): PassVO
@@ -62,16 +52,12 @@ class User
         return $this->password;
     }
 
-    public function setPassword(PassVO $password): self
+    /**
+     * @throws PasswordCreationException
+     */
+    public function setPassword(string $password): void
     {
-        $this->password = $password;
-
-        return $this;
+        $this->password = PassVO::updatePass($password);
     }
 
-    public function getOrCreateCart(): Cart
-    {
-
-
-    }
 }

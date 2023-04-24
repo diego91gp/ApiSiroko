@@ -10,17 +10,9 @@ class CartItem
 {
     private int $id;
 
-    private Product $product;
 
-    private int $uds;
-    private Cart $cart;
-
-
-    public function __construct(Product $product, Cart $cart, int $uds)
+    public function __construct(private Product $product, private Cart $cart, private int $uds)
     {
-        $this->cart = $cart;
-        $this->product = $product;
-        $this->uds = $uds;
     }
 
     public function getProductId(): int

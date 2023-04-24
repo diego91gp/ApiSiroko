@@ -6,16 +6,10 @@ namespace App\Shop\Domain\Product;
 class Product
 {
     private int $id;
-    private string $name;
-    private int $stock;
-    private Price $price;
 
-    public function __construct(string $name, int $stock, Price $price)
+
+    public function __construct(private string $name, private int $stock, private Price $price)
     {
-        $this->name = $name;
-        $this->stock = $stock;
-        $this->price = $price;
-
     }
 
     public function amount(): float
@@ -39,34 +33,27 @@ class Product
         return $this->name;
     }
 
-    public function setName(?string $name): self
+    public function setName(string $name): void
     {
         $this->name = $name;
 
-        return $this;
     }
 
-    public function getStock(): ?int
+    public function getStock(): int
     {
         return $this->stock;
     }
 
-    public function setStock(int $stock): self
+    public function setStock(int $stock): void
     {
         $this->stock = $stock;
 
-        return $this;
     }
 
-    public function getPrice(): Price
-    {
-        return $this->price;
-    }
 
-    public function setPrice(Price $price): self
+    public function updatePrice(float $amount, string $currency): void
     {
-        $this->price = $price;
+        $this->price = Price::updatePrice($amount, $currency);
 
-        return $this;
     }
 }

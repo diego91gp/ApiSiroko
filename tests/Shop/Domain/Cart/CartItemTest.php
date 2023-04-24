@@ -12,15 +12,4 @@ class CartItemTest extends TestCase
 
     }
 
-    /**
-     * @return void
-     * @test
-     * it_should_return_proper_class
-     * @group _test
-     */
-    public function itShouldReturn()
-    {
-        $this->assertEquals();
-
-    }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Shop\Domain\Cart;
 
-use App\Shop\Application\DTO\CartResponseDTO;
 use App\Shop\Domain\Cart\Exceptions\CartExceptions;
 use App\Shop\Domain\Product\Product;
 use App\Shop\Domain\User\User;
@@ -13,20 +12,10 @@ use Doctrine\Common\Collections\Collection;
 
 class Cart
 {
-
     private int $id;
-
     private User $user;
 
     private DateTime $createdAt;
-
-    /**
-     * @return User
-     */
-    public function getUser(): User
-    {
-        return $this->user;
-    }
 
     private Collection $products;
 
@@ -36,6 +25,12 @@ class Cart
         $this->user = $user;
         $this->products = new ArrayCollection();
     }
+
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
 
     public function getTotal(): float
     {
@@ -70,18 +65,6 @@ class Cart
         }
         $this->getProducts()->add(new CartItem($product, $this, $uds));
         return $this;
-    }
-
-    public function resume(): array
-    {
-        $response = new CartResponseDTO();
-
-        foreach ($this->getProducts() as $cartItem) {
-            $response->addToCart($cartItem->getProduct()->getName(), $cartItem->getProduct()->amount()
-                , $cartItem->getUds());
-        }
-//
-        return $response->getProducts();
     }
 
 
@@ -121,6 +104,14 @@ class Cart
     public function setCreatedAt(DateTime $createdAt): void
     {
         $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @param User $user
+     */
+    public function setUser(User $user): void
+    {
+        $this->user = $user;
     }
 
 
