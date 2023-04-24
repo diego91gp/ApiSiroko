@@ -35,6 +35,7 @@ class DoctrineUserRepositoryImpl extends ServiceEntityRepository implements User
 
     public function findById(int $userId): User
     {
+
         return $this->find($userId);
     }
 }

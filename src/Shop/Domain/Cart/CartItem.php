@@ -4,11 +4,20 @@ namespace App\Shop\Domain\Cart;
 
 
 use App\Shop\Domain\Product\Product;
+use SebastianBergmann\LinesOfCode\NegativeValueException;
 
 
 class CartItem
 {
     private int $id;
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
 
 
     public function __construct(private Product $product, private Cart $cart, private int $uds)
@@ -52,6 +61,9 @@ class CartItem
 
     public function setUds(int $uds): void
     {
+        if ($uds < 0) {
+            throw  new NegativeValueException();
+        }
         $this->uds = $uds;
     }
 

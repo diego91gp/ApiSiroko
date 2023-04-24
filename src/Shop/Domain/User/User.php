@@ -8,6 +8,9 @@ use App\Shop\Domain\User\Exceptions\PasswordCreationException;
 
 class User
 {
+
+    private int $id;
+
     public function __construct(private string $name, private EmailVO $email, private PassVO $password)
     {
     }
@@ -17,21 +20,20 @@ class User
         $this->id = $id;
     }
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getName(): string
     {
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function setName(string $name): void
     {
         $this->name = $name;
 
-        return $this;
     }
 
     public function getEmail(): EmailVO

@@ -30,6 +30,7 @@ class AddProductToCartCommandHandler implements CommandHandlerInterface
      */
     public function __invoke(AddProductToCartCommand $command): void
     {
+
         $user = $this->userRepository->findById($command->getUserID());
 
         $product = $this->productRepository->findById($command->getProductId());

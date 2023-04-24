@@ -25,7 +25,7 @@ class AddToCartController extends AbstractController
         try {
             $productID = $request->request->get('productid');
             $units = $request->request->get('units');
-
+            
             $this->handler->dispatchCommand(new AddProductToCartCommand($productID, $units, $userid));
 
             return new JsonResponse("Agregado con exito", Response::HTTP_OK);
