@@ -19,7 +19,6 @@ use PHPUnit\Framework\TestCase;
 
 class AddToCartTest extends TestCase
 {
-    private MockObject|CartRepository $cr;
 
     private MockObject|ProductRepository $pr;
 
@@ -34,9 +33,9 @@ class AddToCartTest extends TestCase
     {
         parent::setUp();
         $this->ur = $this->getMockBuilder(UserRepository::class)->disableOriginalConstructor()->getMock();
-        $this->cr = $this->getMockBuilder(CartRepository::class)->disableOriginalConstructor()->getMock();
+        $cr = $this->getMockBuilder(CartRepository::class)->disableOriginalConstructor()->getMock();
         $this->pr = $this->getMockBuilder(ProductRepository::class)->disableOriginalConstructor()->getMock();
-        $this->addToCartService = new  AddProductToCartCommandHandler($this->ur, $this->pr, $this->cr);
+        $this->addToCartService = new  AddProductToCartCommandHandler($this->ur, $this->pr, $cr);
 
     }
 

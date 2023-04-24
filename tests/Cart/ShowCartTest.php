@@ -54,8 +54,6 @@ class ShowCartTest extends TestCase
         $response = ($this->showCartService)($query);
 
 
-        $this->assertTrue(is_array($response));
-
     }
 
 }

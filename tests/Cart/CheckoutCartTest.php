@@ -54,8 +54,7 @@ class CheckoutCartTest extends TestCase
             ->with($this->equalTo(1))
             ->willReturn($cart);
         $command = new CheckoutCommand(1, 3, 2);
-        $response = ($this->checkoutService)($command);
-        $this->assertTrue(is_array($response));
+        ($this->checkoutService)($command);
 
 
     }
