@@ -68,6 +68,8 @@ class AddProductToCartCommandHandlerTest extends TestCase
 
         $this->assertEquals($this->user, $this->userRepository->findById($this->command->getUserID()));
         $this->assertEquals($this->product, $this->productRepository->findById($this->command->getProductId()));
+
+        
         $this->sut->__invoke($this->command);
 
     }
