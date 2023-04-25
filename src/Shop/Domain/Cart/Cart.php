@@ -47,6 +47,7 @@ class Cart
      */
     public function findItemInCart(int $idItem): CartItem
     {
+
         foreach ($this->getProducts() as $item) {
             if ($item->getProductId() == $idItem) {
                 return $item;
@@ -89,7 +90,7 @@ class Cart
     {
         $this->id = $id;
     }
-    
+
 
     /**
      * @return DateTime

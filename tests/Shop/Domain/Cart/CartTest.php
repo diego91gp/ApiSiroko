@@ -5,6 +5,7 @@ namespace App\Tests\Shop\Domain\Cart;
 
 use App\Shop\Domain\Cart\Cart;
 use App\Shop\Domain\Cart\CartItem;
+use App\Shop\Domain\Cart\Exceptions\CartExceptions;
 use App\Shop\Domain\Product\Product;
 use App\Shop\Domain\User\User;
 use PHPUnit\Framework\TestCase;
@@ -79,6 +80,37 @@ class CartTest extends TestCase
         $updatedCart = $this->sut->addItemsToCart($mockProduct, 15);
 
         $this->assertEquals(30, $updatedCart->getProducts()[0]->getUds());
+
+
+    }
+
+
+    /**
+     * @test
+     * find_item_in_cart
+     * @group cart_test
+     */
+    public function itShouldReturnCartItem()
+    {
+        $mockProduct = $this->createConfiguredMock(Product::class, [
+            "getId" => 1
+        ]);
+        $this->sut->addItemsToCart($mockProduct, 15);
+        $this->assertEquals($this->sut->getProducts()[0], $this->sut->findItemInCart(1));
+
+
+    }
+
+    /**
+     * @test
+     * find_item_exception
+     * @group cart_test
+     */
+    public function itShouldReturnDeleteItemException()
+    {
+        $this->expectException(CartExceptions::class);
+        $this->expectExceptionMessage(CartExceptions::deleteItemError()->getMessage());
+        $this->sut->findItemInCart(1);
 
 
     }

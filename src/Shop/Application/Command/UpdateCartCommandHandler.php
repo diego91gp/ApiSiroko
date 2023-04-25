@@ -27,7 +27,7 @@ class UpdateCartCommandHandler implements CommandHandlerInterface
      * @throws CartExceptions
      * @throws PriceExceptions
      */
-    public function __invoke(UpdateCartCommand $command): string
+    public function __invoke(UpdateCartCommand $command): void
     {
 
         $this->guardUnits($command->getUnits());
@@ -45,7 +45,7 @@ class UpdateCartCommandHandler implements CommandHandlerInterface
             $cartItem->setUds($command->getUnits());
             $this->cartItemRepository->saveItem($cartItem);
         }
-        return 'Carrito actualizado correctamente';
+
     }
 
 
@@ -67,15 +67,6 @@ class UpdateCartCommandHandler implements CommandHandlerInterface
 
     }
 
-    /**
-     * @throws CartExceptions
-     */
-    private function checkIfCartContainsProduct($cartItem): void
-    {
-
-        if (!$cartItem) throw CartExceptions::deleteItemError();
-
-    }
 
     /**
      * @throws CartExceptions

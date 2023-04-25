@@ -25,9 +25,9 @@ class UpdateCartController extends AbstractController
             $productid = $request->request->get('productid');
             $uds = $request->request->get('units');
 
-            $result = $this->command->dispatchCommand(new UpdateCartCommand($productid, $userid, $uds));
+            $this->command->dispatchCommand(new UpdateCartCommand($productid, $userid, $uds));
 
-            return new JsonResponse($result, Response::HTTP_OK);
+            return new JsonResponse("Carrito Actualizado Correctamente", Response::HTTP_OK);
         } catch (CartExceptions $e) {
             return new JsonResponse($e->getMessage());
         }
