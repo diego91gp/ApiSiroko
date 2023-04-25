@@ -61,6 +61,11 @@ class AddProductToCartCommandHandlerTest extends TestCase
      */
     public function itShouldReturn()
     {
+        $this->assertEquals(1, $this->command->getUserID());
+        $this->assertEquals(1, $this->command->getProductId());
+        $this->assertEquals(10, $this->command->getUnits());
+
+
         $this->assertEquals($this->user, $this->userRepository->findById($this->command->getUserID()));
         $this->assertEquals($this->product, $this->productRepository->findById($this->command->getProductId()));
         $this->sut->__invoke($this->command);
