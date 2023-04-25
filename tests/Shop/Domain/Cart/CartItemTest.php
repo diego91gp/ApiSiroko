@@ -36,6 +36,32 @@ class CartItemTest extends TestCase
 
     /**
      * @test
+     * it_should_return_user_id
+     * @group cart_item_test
+     */
+    public function itShouldReturnUserId()
+    {
+        $newSut = $this->createConfiguredMock(CartItem::class, [
+            "getUserId" => 8
+        ]);
+        $this->assertEquals(8, $newSut->getUserId());
+    }
+
+    /**
+     * @test
+     * it_should_return_uproduct_id
+     * @group cart_item_test
+     */
+    public function itShouldReturnProductId()
+    {
+        $newSut = $this->createConfiguredMock(CartItem::class, [
+            "getProductId" => 8
+        ]);
+        $this->assertEquals(8, $newSut->getProductId());
+    }
+
+    /**
+     * @test
      * update_cart
      * @group cart_item_test
      */
