@@ -20,7 +20,6 @@ class AddProductToCartCommandHandlerTest extends TestCase
     private AddProductToCartCommandHandler $sut;
     private AddProductToCartCommand|MockObject $command;
     private User|MockObject $user;
-
     private Cart|MockObject $cart;
     private Product|MockObject $product;
     private UserRepository|MockObject $userRepository;
@@ -64,8 +63,7 @@ class AddProductToCartCommandHandlerTest extends TestCase
     {
         $this->assertEquals($this->user, $this->userRepository->findById($this->command->getUserID()));
         $this->assertEquals($this->product, $this->productRepository->findById($this->command->getProductId()));
-        
-        ($this->sut)($this->command);
+        $this->sut->__invoke($this->command);
 
     }
 
@@ -78,7 +76,7 @@ class AddProductToCartCommandHandlerTest extends TestCase
     {
         $newSut = new AddProductToCartCommandHandler($this->userRepository, $this->createMock(ProductRepository::class), $this->cartRepository);
         $this->expectException(ProductNotFoundInDBException::class);
-        ($newSut)($this->command);
+        $newSut->__invoke($this->command);
 
     }
 
@@ -91,7 +89,7 @@ class AddProductToCartCommandHandlerTest extends TestCase
     {
         $newSut = new AddProductToCartCommandHandler($this->createMock(UserRepository::class), $this->productRepository, $this->cartRepository);
         $this->expectException(UserNotFoundException::class);
-        ($newSut)($this->command);
+        $newSut->__invoke($this->command);
 
     }
 
