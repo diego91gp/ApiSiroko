@@ -18,23 +18,32 @@ class HandlerEventDispatcher
     {
     }
 
+    /**
+     * @throws Throwable
+     */
     public function dispatchCommand($event): mixed
     {
         return $this->dispatch($event, $this->commandBus);
     }
 
+    /**
+     * @throws Throwable
+     */
     public function dispatchQuery($event): mixed
     {
         return $this->dispatch($event, $this->queryBus);
     }
 
+    /**
+     * @throws Throwable
+     */
     private function dispatch(mixed $event, MessageBusInterface $bus): mixed
     {
         try {
             $envelope = $bus->dispatch($event);
 
         } catch (HandlerFailedException $e) {
-            $this->proccessBusException($e);
+            $this->processBusException($e);
         }
         return $this->processEnvelope($envelope);
     }
@@ -48,7 +57,7 @@ class HandlerEventDispatcher
     /**
      * @throws Throwable
      */
-    private function proccessBusException(HandlerFailedException $e): void
+    private function processBusException(HandlerFailedException $e): void
     {
         while ($e instanceof HandlerFailedException) {
 

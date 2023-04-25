@@ -4,12 +4,12 @@ namespace App\Shop\Infrastructure\Controller\CartControllers;
 
 use App\Shared\Infrastructure\Services\HandlerEventDispatcher;
 use App\Shop\Application\Command\UpdateCartCommand;
-use App\Shop\Domain\Cart\Exceptions\CartExceptions;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Throwable;
 
 class UpdateCartController extends AbstractController
 {
@@ -28,7 +28,8 @@ class UpdateCartController extends AbstractController
             $this->command->dispatchCommand(new UpdateCartCommand($productid, $userid, $uds));
 
             return new JsonResponse("Carrito Actualizado Correctamente", Response::HTTP_OK);
-        } catch (CartExceptions $e) {
+
+        } catch (Throwable $e) {
             return new JsonResponse($e->getMessage());
         }
 

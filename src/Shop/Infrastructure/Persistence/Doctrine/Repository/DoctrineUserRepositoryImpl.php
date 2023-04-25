@@ -33,7 +33,7 @@ class DoctrineUserRepositoryImpl extends ServiceEntityRepository implements User
         $this->getEntityManager()->flush();
     }
 
-    public function findById(int $userId): User
+    public function findById(int $userId): ?User
     {
 
         return $this->find($userId);
