@@ -60,6 +60,7 @@ class DeleteProductFromCartCommandHandler implements CommandHandlerInterface
      */
     private function guardCart(?Cart $cartItem): void
     {
+
         if (!$cartItem) throw CartExceptions::cartNotFound();
     }
 
