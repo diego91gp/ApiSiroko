@@ -45,12 +45,12 @@ class CheckoutCommandHandler implements CommandHandlerInterface
     }
 
 
-    public function checkout(Cart $cart, CartResponseDTO $cartResponseDTO): void
+    private function checkout(Cart $cart, CartResponseDTO $cartResponseDTO): void
     {
         foreach ($cart->getProducts() as $cartItem) {
             $cartResponseDTO->addToCart($cartItem->getProduct()->getName(), $cartItem->getProduct()->amount()
                 , $cartItem->getUds());
-            $product = $this->productRepository->find($cartItem->getProduct()->getId());
+            $product = $this->productRepository->findById($cartItem->getProduct()->getId());
             $product->setStock($product->getStock() - $cartItem->getUds());
             $this->productRepository->saveProduct($product);
 

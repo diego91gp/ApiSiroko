@@ -24,7 +24,7 @@ class CheckoutController extends AbstractController
 
             return new JsonResponse($cartDTO->getProducts(), Response::HTTP_OK);
         } catch (Exception $e) {
-            return new JsonResponse('error', Response::HTTP_OK);
+            return new JsonResponse($e->getMessage(), Response::HTTP_OK);
         }
 
     }

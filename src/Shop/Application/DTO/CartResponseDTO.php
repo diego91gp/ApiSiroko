@@ -9,8 +9,16 @@ class CartResponseDTO
     private array $products = [];
     private float $total = 0;
 
+    /**
+     * @return float
+     */
+    public function getTotal(): float
+    {
+        return number_format($this->total, 2);
+    }
 
-    public function setTotal(string $total): void
+
+    public function setTotal(float $total): void
     {
         $this->total = $total;
     }
@@ -40,7 +48,7 @@ class CartResponseDTO
     {
         if ($this->total != 0) {
             $this->products[] = [
-                'total' => round($this->total, 2)
+                'total' => number_format($this->total, 2)
             ];
         }
         return $this->products;

@@ -31,13 +31,14 @@ class DeleteProductFromCartCommandHandler implements CommandHandlerInterface
 
         $this->guardCart($cart);
         $this->guardProduct($product);
-        
+
         $cartItem = $this->cartItemRepository->findByCartIdAndProductId($cart->getId(), $command->getProductId());
 
         $this->checkIfCartContainsProduct($cartItem);
 
 
         $this->cartItemRepository->deleteCartItem($cartItem);
+
 
         if ($cart->getProducts()->count() == 0) {
             $this->cartRepository->deleteCart($cart);

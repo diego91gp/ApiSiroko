@@ -37,6 +37,7 @@ class AddProductToCartCommandHandler implements CommandHandlerInterface
 
         $this->guardUser($user);
         $this->guardProduct($product);
+
         $cart = $this->checkCart($user);
 
         $cart->addItemsToCart($product, $command->getUnits());
@@ -50,7 +51,6 @@ class AddProductToCartCommandHandler implements CommandHandlerInterface
     private function guardProduct(?Product $product): void
     {
         if (!$product) throw new ProductNotFoundInDBException();
-
     }
 
     private function checkCart(User $user): Cart
