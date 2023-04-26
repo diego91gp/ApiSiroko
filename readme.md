@@ -12,6 +12,8 @@
 * [Siroko API Carrito](#siroko-api-carrito)
     * [1. Instalación de Symfony](#1-instalación-de-symfony)
     * [2. Configuración del framework para trabajar con docker](#2-configuración-del-framework-para-trabajar-con-docker)
+        * [Por que docker?](#por-que-docker)
+        * [Generamos archivo docker compose y dockerfile](#generamos-archivo-docker-compose-y-dockerfile)
     * [3. Dependencias necesarias](#3-dependencias-necesarias)
     * [4. Uso de la API](#4-uso-de-la-api)
     * [5. Modelado de la aplicación](#5-modelado-de-la-aplicación)
