@@ -34,7 +34,6 @@ proyecto de forma sencilla.
 Lo instalamos con el siguiente comando:
 
 ```
-sudo apt-get update
 sudo apt-get install composer
 ```
 
@@ -311,18 +310,9 @@ private readonly UserRepository    $userRepository,
 private readonly ProductRepository $productRepository,
 private readonly CartRepository    $cartRepository,
 )
-{
-
-    }
-
-
-    /**
-     * @throws ProductNotFoundInDBException
-     * @throws UserNotFoundException
-     */
+{}
     public function __invoke(AddProductToCartCommand $command): void
     {
-
         $user = $this->userRepository->findById($command->getUserID());
 
         $product = $this->productRepository->findById($command->getProductId());
@@ -353,7 +343,6 @@ parent::__construct($registry, Cart::class);
 
     public function saveCart(Cart $cart): void
     {
-
         $this->getEntityManager()->persist($cart);
         $this->getEntityManager()->flush();
     }

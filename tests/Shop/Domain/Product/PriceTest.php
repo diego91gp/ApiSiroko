@@ -10,6 +10,9 @@ class PriceTest extends TestCase
 {
     private Price $sut;
 
+    /**
+     * @throws PriceExceptions
+     */
     protected function setUp(): void
     {
         $this->sut = new Price(100, 'USD');
