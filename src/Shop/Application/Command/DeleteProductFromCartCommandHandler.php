@@ -15,7 +15,8 @@ class DeleteProductFromCartCommandHandler implements CommandHandlerInterface
     public function __construct(
         private readonly CartRepository     $cartRepository,
         private readonly ProductRepository  $productRepository,
-        private readonly CartItemRepository $cartItemRepository)
+        private readonly CartItemRepository $cartItemRepository
+    )
     {
 
     }
