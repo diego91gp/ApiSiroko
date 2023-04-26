@@ -17,6 +17,7 @@ RUN composer require --dev phpunit/phpunit
 #RUN composer require symfony/security-bundle
 #RUN composer require orm
 #RUN composer require symfony/validator
+#RUN composer require symfony/messenger
 RUN composer require --dev phpunit/phpunit
 
 
