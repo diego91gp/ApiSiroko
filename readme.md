@@ -148,7 +148,16 @@ Otras dependencias opcionales
 
 ## 4. Configuración de nuestras entidades y mapeos con Doctrine
 
-Tenemos un mapeo con xml, para ello le tenemos que decir a Doctrine donde encontrar los ficheros de mapeo
+Tenemos que hacer que nuestras entidades sean ricas, no anémicas, porque las entidades son el corazón
+de nuestra lógica de negocio y deberían contener tanto los datos como el comportamiento que se relaciona con
+ellos. Si nuestras entidades son anémicas y solo contienen datos sin comportamiento, entonces estamos
+esencialmente creando estructuras de datos y no objetos orientados a objetos. Esto puede llevar a problemas
+como una lógica de negocio dispersa y difíciles de mantener, la falta de encapsulación
+y la duplicación de código. Al hacer que nuestras entidades sean ricas y contengan tanto los datos como
+el comportamiento, podemos lograr una mejor encapsulación y una lógica de negocio más clara y fácil de mantener.
+
+Mapearemos nuestras entidades con mapeo xml, para ello le tenemos que decir a Doctrine donde encontrar los ficheros de
+mapeo
 para nuestras entidades para a la hora de hacer la migración sepa como tiene que hacerla.
 
 En este caso tenemos **4 entidades** (4 tablas), así que le indicamos a Doctrine donde encontrar los archivos mxml.
